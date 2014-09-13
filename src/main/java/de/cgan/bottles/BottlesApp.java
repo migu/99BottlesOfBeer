@@ -10,24 +10,24 @@ import java.util.function.Consumer;
  */
 public class BottlesApp {
   public static void main(String... args) {
-    N numBottles = new N(99);
+    Num numBottles = new Num(99);
     Singer singer = new Singer(System.out, numBottles);
     numBottles.forEach(singer);
   }
 
-  private static class Singer implements Consumer<N> {
+  private static class Singer implements Consumer<Num> {
     private static final String WALL = "on the wall";
-    private final Bottle bottle = new Bottle("bottle", "s");
+    private final Word bottle = new Word("bottle", "s");
     private final PrintStream out;
-    private final N numBottles;
+    private final Num numBottles;
 
-    public Singer(PrintStream out, N numBottles) {
+    public Singer(PrintStream out, Num numBottles) {
       this.out = out;
       this.numBottles = numBottles;
     }
 
     @Override
-    public void accept(N n) {
+    public void accept(Num n) {
       bottlesUpperCase(n).f(" %s, ", WALL).bottlesLowerCase(n).f(".").nl();
       if (n.isPositive()) {
         f("Take one down, pass it around, ").bottlesLowerCase(n.dec()).f(" %s.", WALL).nl().nl();
@@ -36,17 +36,17 @@ public class BottlesApp {
       }
     }
 
-    private Singer bottlesUpperCase(N n) {
+    private Singer bottlesUpperCase(Num n) {
       singBottlesOfBeer(n, false);
       return this;
     }
 
-    private Singer bottlesLowerCase(N n) {
+    private Singer bottlesLowerCase(Num n) {
       singBottlesOfBeer(n, true);
       return this;
     }
 
-    private Singer singBottlesOfBeer(N n, boolean lowerCase) {
+    private Singer singBottlesOfBeer(Num n, boolean lowerCase) {
       String num = n.toString();
       if (lowerCase) {
         num = firstLowerCase(num);
@@ -70,15 +70,15 @@ public class BottlesApp {
     }
   }
 
-  public static class N implements Iterable<N> {
+  public static class Num implements Iterable<Num> {
     private final int n;
 
-    public N(int n) {
+    public Num(int n) {
       this.n = n;
     }
 
-    public N dec() {
-      return new N(n - 1);
+    public Num dec() {
+      return new Num(n - 1);
     }
 
     public int toInt() {
@@ -95,14 +95,14 @@ public class BottlesApp {
     }
 
     @Override
-    public Iterator<N> iterator() {
+    public Iterator<Num> iterator() {
       return new NIterator(this);
     }
 
-    private static class NIterator implements Iterator<N> {
-      private N current;
+    private static class NIterator implements Iterator<Num> {
+      private Num current;
 
-      public NIterator(N start) {
+      public NIterator(Num start) {
         this.current = start;
       }
 
@@ -112,19 +112,19 @@ public class BottlesApp {
       }
 
       @Override
-      public N next() {
-        N old = current;
+      public Num next() {
+        Num old = current;
         current = current.dec();
         return old;
       }
     }
   }
 
-  private static class Bottle {
+  private static class Word {
     private final String singular;
     private final String plural;
 
-    public Bottle(String root, String pluralSuffix) {
+    public Word(String root, String pluralSuffix) {
       this.singular = root;
       this.plural = root + pluralSuffix;
     }
