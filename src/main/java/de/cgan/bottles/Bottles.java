@@ -8,14 +8,14 @@ import java.util.function.Consumer;
  * @see http://99-bottles-of-beer.net/
  * @author migu
  */
-public class BottlesApp {
+public class Bottles {
   public static void main(String... args) {
     Num numBottles = new Num(99);
     Singer singer = new Singer(System.out, numBottles);
     numBottles.forEach(singer);
   }
 
-  private static class Singer implements Consumer<Num> {
+  static class Singer implements Consumer<Num> {
     private static final String WALL = "on the wall";
     private final Word bottle = new Word("bottle", "s");
     private final PrintStream out;
